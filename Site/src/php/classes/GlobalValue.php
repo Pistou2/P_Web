@@ -11,4 +11,6 @@
     class GlobalValue
     {
         const SITE_TITLE = "Share Book";
+
+        const PAGES_ARRAY = ["Accueil", "Ouvrages", "Ajouter un ouvrage"];
     }

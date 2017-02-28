@@ -8,10 +8,15 @@ Description:
 -->
 
 <?php
+    session_start();
+
     // Pour inclure automatiquement les classes
     spl_autoload_register(function ($class) {
         include_once "classes/$class.php";
-    })
+    });
+
+    $pageId = 1;#NE PAS OUBLIE DE L'ENLEVER POUR VRAIS PAGES
+    $isConnected = true;#TODO Moyen de savoir si connecter ou pas
 ?>
 <html lang="fr">
     <head>
@@ -19,7 +24,7 @@ Description:
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title><?php echo GlobalValue::SITE_TITLE #TODO FAIRE EN SORTE QUE YANN FERME SA BOUCHE?></title>
+        <title><?php echo GlobalValue::SITE_TITLE?></title>
 
         <!-- Bootstrap -->
         <link href="../../resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,14 +42,30 @@ Description:
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/"><?php echo GlobalValue::SITE_TITLE?></a>
                 </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/index.php">Accueil</a></li>
-                    <li><a href="/books.php">Ouvrages</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-                </ul>
+                <?php
+
+                    echo '<ul class="nav navbar-nav">';
+                    echo '<li'.($pageId === 0?' class="active"':'').'><a href="./accueil.php">Accueil</a></li>';
+                    echo '<li'.($pageId === 1?' class="active"':'').'><a href="./books.php">Ouvrages</a></li>';
+
+                    if ($isConnected){
+                        echo '<li'.($pageId === 2?' class="active"':'').'><a href="./addBook.php">Ajouter un ouvrage</a></li>';
+                    }
+
+                    echo '</ul>';
+                    echo '<ul class="nav navbar-nav navbar-right">';
+
+                    if($isConnected){
+                        echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>
+                              <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>';
+                    }
+                    else{
+                        echo '<li><a href="#YOLO"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                              <li><a href="#YOLO"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                    }
+
+                    echo '</ul>';
+                ?>
             </div>
         </nav>
 
