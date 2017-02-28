@@ -5,3 +5,11 @@ Date:
 Summary: 
 */
 
+body{
+    background-color: #fafafa;
+}
+
+.head, .jumbotron {
+    background-color: #022692;
+    color: #bdbdbd;
+}

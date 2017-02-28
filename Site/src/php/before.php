@@ -24,10 +24,11 @@ Description:
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title><?php echo GlobalValue::SITE_TITLE?></title>
+        <title><?php echo GlobalValue::SITE_TITLE ?></title>
 
         <!-- Bootstrap -->
-        <link href="../../resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="../../resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="../../resources/css/common.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,37 +38,42 @@ Description:
         <![endif]-->
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/"><?php echo GlobalValue::SITE_TITLE?></a>
+        <div class="head">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/"><?php echo GlobalValue::SITE_TITLE ?></a>
+                    </div>
+
+                    <ul class="nav navbar-nav">
+                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href="./accueil.php"><?php echo GlobalValue::PAGES_ARRAY[0] ?></a></li>
+                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href="./books.php"><?php echo GlobalValue::PAGES_ARRAY[1] ?></a></li>
+
+                        <?php
+                            if ($isConnected) {
+                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="./addBook.php">' . GlobalValue::PAGES_ARRAY[2] . '</a></li>';
+                            }
+                        ?>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php
+                            if ($isConnected) {
+                                echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>';
+                                echo '<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
+                            } else {
+                                echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
+                                echo '<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                            }
+                        ?>
+                    </ul>
                 </div>
-                <?php
+            </nav>
 
-                    echo '<ul class="nav navbar-nav">';
-                    echo '<li'.($pageId === 0?' class="active"':'').'><a href="./accueil.php">Accueil</a></li>';
-                    echo '<li'.($pageId === 1?' class="active"':'').'><a href="./books.php">Ouvrages</a></li>';
-
-                    if ($isConnected){
-                        echo '<li'.($pageId === 2?' class="active"':'').'><a href="./addBook.php">Ajouter un ouvrage</a></li>';
-                    }
-
-                    echo '</ul>';
-                    echo '<ul class="nav navbar-nav navbar-right">';
-
-                    if($isConnected){
-                        echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>
-                              <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Déconnexion</a></li>';
-                    }
-                    else{
-                        echo '<li><a href="#YOLO"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
-                              <li><a href="#YOLO"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
-                    }
-
-                    echo '</ul>';
-                ?>
+            <div class="jumbotron text-center">
+                <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
             </div>
-        </nav>
+        </div>
 
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
