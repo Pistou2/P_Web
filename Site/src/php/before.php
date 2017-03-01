@@ -73,6 +73,5 @@ Description:
             <div class="jumbotron text-center">
                 <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
             </div>
-        </nav>
         <div id="container">
             <!--Content here-->
