@@ -1,0 +1,8 @@
+Options -MultiViews
+
+Redirect 302 "^edsa-Project$" /edsa-Project/before/
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ ./src/php/$1.php [NC,L]

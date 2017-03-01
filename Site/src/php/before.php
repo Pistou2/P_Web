@@ -73,12 +73,6 @@ Description:
             <div class="jumbotron text-center">
                 <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
             </div>
-        </div>
-
-
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../../resources/lib/jquery-3.1.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../../resources/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    </body>
-</html>
+        </nav>
+        <div id="container">
+            <!--Content here-->
