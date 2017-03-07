@@ -63,12 +63,12 @@ Description:
                     </div>
 
                     <ul class="nav navbar-nav">
-                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href="Accueil"><?php echo GlobalValue::PAGES_ARRAY[0] ?></a></li>
-                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href="Ouvrage"><?php echo GlobalValue::PAGES_ARRAY[1] ?></a></li>
+                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href=<?php echo '"'.GlobalValue::PAGES_ARRAY[0][0].'">'.GlobalValue::PAGES_ARRAY[0][0] ?></a></li>
+                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href=<?php echo '"'.GlobalValue::PAGES_ARRAY[1][1].'">'.GlobalValue::PAGES_ARRAY[1][0] ?></a></li>
 
                         <?php
                             if ($isConnected) {
-                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="./AddBook">' . GlobalValue::PAGES_ARRAY[2] . '</a></li>';
+                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="'.GlobalValue::PAGES_ARRAY[2][1].'">'.GlobalValue::PAGES_ARRAY[2][0].'</a></li>';
                             }
                         ?>
                     </ul>
@@ -80,15 +80,14 @@ Description:
                                 echo '<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
                             } else {
                                 echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
-                                echo '<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                                echo '<li><a href="/login?previousPageID='.$pageId.'"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
                             }
                         ?>
                     </ul>
                 </div>
             </nav>
-
             <div class="jumbotron text-center">
-                <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
+                <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId][0] ?></h1>
             </div>
         </div>
         <?php
