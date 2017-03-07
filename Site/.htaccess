@@ -1,6 +1,6 @@
 Options -MultiViews
 
-Redirect 302 "^edsa-Project$" /edsa-Project/before/
+DirectoryIndex src/php/Accueil.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d

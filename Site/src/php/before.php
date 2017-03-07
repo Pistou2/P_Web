@@ -15,8 +15,7 @@ Description:
         include_once "classes/$class.php";
     });
 
-    $pageId = 1;#NE PAS OUBLIE DE L'ENLEVER POUR VRAIS PAGES
-    $isConnected = true;#TODO Moyen de savoir si connecter ou pas
+    $isConnected = false;#TODO Moyen de savoir si connecter ou pas
 ?>
 <html lang="fr">
     <head>
@@ -24,11 +23,12 @@ Description:
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title><?php echo GlobalValue::SITE_TITLE ?></title>
+        <title><?php echo GlobalValue::PAGES_ARRAY[$pageId]." - ".GlobalValue::SITE_TITLE ?></title>
 
         <!-- Bootstrap -->
-        <link type="text/css" href="../../resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-        <link type="text/css" href="../../resources/css/common.css" rel="stylesheet">
+        <link type="text/css" href="resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="resources/css/common.css" rel="stylesheet">
+        <link href="resources/image/book-256.ico" rel="icon">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,8 +46,8 @@ Description:
                     </div>
 
                     <ul class="nav navbar-nav">
-                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href="./accueil.php"><?php echo GlobalValue::PAGES_ARRAY[0] ?></a></li>
-                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href="./books.php"><?php echo GlobalValue::PAGES_ARRAY[1] ?></a></li>
+                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href="Accueil"><?php echo GlobalValue::PAGES_ARRAY[0] ?></a></li>
+                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href="Ouvrage"><?php echo GlobalValue::PAGES_ARRAY[1] ?></a></li>
 
                         <?php
                             if ($isConnected) {
@@ -73,5 +73,5 @@ Description:
             <div class="jumbotron text-center">
                 <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
             </div>
+        </div>
         <div id="container">
-            <!--Content here-->
