@@ -10,12 +10,20 @@ Description:
 <?php
     session_start();
 
+    if (!isset($_SESSION["isConnected"])){
+        $_SESSION["isConnected"] = false;
+    }
+
+    if (!isset($_SESSION["mustShowPopup"])){
+        $_SESSION["mustShowPopup"] = false;
+    }
+
     // Pour inclure automatiquement les classes
     spl_autoload_register(function ($class) {
         include_once "classes/$class.php";
     });
 
-    $isConnected = false;#TODO Moyen de savoir si connecter ou pas
+    $isConnected = $_SESSION["isConnected"];
 
     /*Liste de page :
     0 : Accueil
@@ -60,7 +68,7 @@ Description:
 
                         <?php
                             if ($isConnected) {
-                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="./addBook.php">' . GlobalValue::PAGES_ARRAY[2] . '</a></li>';
+                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="./AddBook">' . GlobalValue::PAGES_ARRAY[2] . '</a></li>';
                             }
                         ?>
                     </ul>
@@ -83,4 +91,30 @@ Description:
                 <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId] ?></h1>
             </div>
         </div>
+        <?php
+            if ($_SESSION["mustShowPopup"]){
+                if ($_SESSION["isConnected"]){
+                    echo '<div class="modal fade" tabindex="-1" role="dialog" id="ConfirmConnection">';
+                    echo '    <div class="modal-dialog" role="document">';
+                    echo '        <div class="modal-content">';
+                    echo '            <div class="modal-header">';
+                    echo '                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                    echo '                <h4 class="modal-title">Connexion réussie</h4>';
+                    echo '            </div>';
+                    echo '            <div class="modal-body">';
+                    echo '                <p>Vous avez bien été déconnecté de votre compte&hellip;</p>';
+                    echo '            </div>';
+                    echo '            <div class="modal-footer">';
+                    echo '                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+                    echo '            </div>';
+                    echo '        </div><!-- /.modal-content -->';
+                    echo '    </div><!-- /.modal-dialog -->';
+                    echo '</div><!-- /.modal -->';
+                }
+
+                else{
+
+                }
+            }
+        ?>
         <div id="container">
