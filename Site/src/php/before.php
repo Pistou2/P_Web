@@ -16,6 +16,15 @@ Description:
     });
 
     $isConnected = false;#TODO Moyen de savoir si connecter ou pas
+
+    /*Liste de page :
+    0 : Accueil
+    1 : Ouvrage
+    2 : AddBook
+    3 : 401Error
+    4 : 404Error
+    5 : Login
+    */
 ?>
 <html lang="fr">
     <head>

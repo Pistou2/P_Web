@@ -1,16 +1,25 @@
-<!--ETML
+<?php
+/*ETML
 author  merkya
 date    28.02.2017
 summary
--->
-
-<?php
+*/
 //used for testing
 require_once "before.php"
 ?>
         </div>
-        <footer class="navbar navbar-inverse">
-            <p>test</p>
+
+        <footer class="footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Réalisé par Clément Dieperink et Merk Yann lors d'un projet web inclu dans notre formation dans une École
+                        Très
+                        Mature à Lausanne.</p>
+                    <p>Contacts :</p>
+                    <p><a href="mailto:dieperincl@etml.educanet2.ch">dieperincl@etml.educanet2.ch</a>
+                    <p><a href="mailto:merkya@etml.educanet2.ch">merkya@etml.educanet2.ch</a></p>
+                </div>
+            </div>
         </footer>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

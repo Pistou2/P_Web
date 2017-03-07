@@ -1,16 +1,16 @@
 <?php
 
-    /* 
-    *  ETML
-    *  Auteur : Clément Dieperink
-    *  Date : 14.02.2017
-    *  Description :
-    */
+/*
+*  ETML
+*  Auteur : Clément Dieperink
+*  Date : 14.02.2017
+*  Description :
+*/
 
 
-    class GlobalValue
-    {
-        const SITE_TITLE = "Share Book";
+class GlobalValue
+{
+    const SITE_TITLE = "Share Book";
 
-        const PAGES_ARRAY = ["Accueil", "Ouvrages", "Ajouter un ouvrage"];
-    }
+    const PAGES_ARRAY = ["Accueil", "Ouvrages", "Ajouter un ouvrage", "Erreur 401", "Erreur 404", "Login"];
+}
