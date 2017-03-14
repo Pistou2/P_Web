@@ -19,3 +19,11 @@ footer {
     background-color: #424242;
     color: #ffffff;
 }
+
+footer a:hover {
+    color: #99F;
+}
+
+footer a:focus {
+    color: #00F;
+}

@@ -7,11 +7,13 @@ summary
 //used for testing
 require_once "before.php"
 ?>
-        </div>
+              </div><!--col-->
+            </div><!--row-->
+        </div><!--container-->
 
         <footer class="footer">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8 col-md-push-2">
                     <p>Réalisé par Clément Dieperink et Merk Yann lors d'un projet web inclu dans notre formation dans une École
                         Très
                         Mature à Lausanne.</p>

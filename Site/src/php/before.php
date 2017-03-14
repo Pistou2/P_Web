@@ -10,11 +10,11 @@ Description:
 <?php
     session_start();
 
-    if (!isset($_SESSION["isConnected"])){
-        $_SESSION["isConnected"] = false;
+    if (!isset($_SESSION["userID"])) {
+        $_SESSION["userID"] = null;
     }
 
-    if (!isset($_SESSION["mustShowPopup"])){
+    if (!isset($_SESSION["mustShowPopup"])) {
         $_SESSION["mustShowPopup"] = false;
     }
 
@@ -23,7 +23,7 @@ Description:
         include_once "classes/$class.php";
     });
 
-    $isConnected = $_SESSION["isConnected"];
+    $isConnected = $_SESSION["userID"] != null;
 
     /*Liste de page :
     0 : Accueil
@@ -40,7 +40,7 @@ Description:
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title><?php echo GlobalValue::PAGES_ARRAY[$pageId]." - ".GlobalValue::SITE_TITLE ?></title>
+        <title><?php echo GlobalValue::PAGES_ARRAY[$pageId][0] . " - " . GlobalValue::SITE_TITLE ?></title>
 
         <!-- Bootstrap -->
         <link type="text/css" href="resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -63,25 +63,25 @@ Description:
                     </div>
 
                     <ul class="nav navbar-nav">
-                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href=<?php echo '"'.GlobalValue::PAGES_ARRAY[0][0].'">'.GlobalValue::PAGES_ARRAY[0][0] ?></a></li>
-                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href=<?php echo '"'.GlobalValue::PAGES_ARRAY[1][1].'">'.GlobalValue::PAGES_ARRAY[1][0] ?></a></li>
+                        <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a href=<?php echo '"' . GlobalValue::PAGES_ARRAY[0][0] . '">' . GlobalValue::PAGES_ARRAY[0][0] ?></a></li>
+                        <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a href=<?php echo '"' . GlobalValue::PAGES_ARRAY[1][1] . '">' . GlobalValue::PAGES_ARRAY[1][0] ?></a></li>
 
                         <?php
-                            if ($isConnected) {
-                                echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="'.GlobalValue::PAGES_ARRAY[2][1].'">'.GlobalValue::PAGES_ARRAY[2][0].'</a></li>';
-                            }
+                        if ($isConnected) {
+                            echo '<li' . ($pageId === 2 ? ' class="active"' : '') . '><a href="' . GlobalValue::PAGES_ARRAY[2][1] . '">' . GlobalValue::PAGES_ARRAY[2][0] . '</a></li>';
+                        }
                         ?>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <?php
-                            if ($isConnected) {
-                                echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>';
-                                echo '<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
-                            } else {
-                                echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
-                                echo '<li><a href="/login?previousPageID='.$pageId.'"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
-                            }
+                        if ($isConnected) {
+                            echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>';
+                            echo '<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
+                        } else {
+                            echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
+                            echo '<li><a href="/login?previousPageID=' . $pageId . '"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                        }
                         ?>
                     </ul>
                 </div>
@@ -91,29 +91,51 @@ Description:
             </div>
         </div>
         <?php
-            if ($_SESSION["mustShowPopup"]){
-                if ($_SESSION["isConnected"]){
-                    echo '<div class="modal fade" tabindex="-1" role="dialog" id="ConfirmConnection">';
-                    echo '    <div class="modal-dialog" role="document">';
-                    echo '        <div class="modal-content">';
-                    echo '            <div class="modal-header">';
-                    echo '                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-                    echo '                <h4 class="modal-title">Connexion réussie</h4>';
-                    echo '            </div>';
-                    echo '            <div class="modal-body">';
-                    echo '                <p>Vous avez bien été déconnecté de votre compte&hellip;</p>';
-                    echo '            </div>';
-                    echo '            <div class="modal-footer">';
-                    echo '                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-                    echo '            </div>';
-                    echo '        </div><!-- /.modal-content -->';
-                    echo '    </div><!-- /.modal-dialog -->';
-                    echo '</div><!-- /.modal -->';
-                }
+        if ($_SESSION["mustShowPopup"]) {
+            if ($isConnected) {
+                /* TODO : Discuter de ça, le modal demande du JS chargé
+                <div class="modal fade" tabindex="-1" role="dialog" id="ConfirmConnection">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Connexion réussie</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Vous avez bien été déconnecté de votre compte&hellip;</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <script>
+                $(document).ready(function () {
+                    $("#ConfirmConnection").modal();
+                });
+                </script>*/
+                ?>
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Connection réussie!</strong>
+                </div>
 
-                else{
+                <?php
 
-                }
+            } else {
+                ?>
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>Vous vous êtes bien déconnecté.</p>
+                </div>
+                <?php
             }
+
+            $_SESSION["mustShowPopup"] = false;
+        }
         ?>
         <div id="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-push-2">
