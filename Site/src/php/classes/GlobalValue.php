@@ -12,5 +12,5 @@ class GlobalValue
 {
     const SITE_TITLE = "Share Book";
 
-    const PAGES_ARRAY = [["Accueil", "Accueil"], ["Ouvrages", "Ouvrage"], ["Ajouter un ouvrage", "AddBook"], ["Erreur 401", "401Error"], ["Erreur 404", "404Error"], ["Login", "Login"]];
+    const PAGES_ARRAY = [["Accueil", "Accueil"], ["Ouvrages", "Ouvrage"], ["Ajouter un ouvrage", "AddBook"], ["Erreur 401", "401Error"], ["Erreur 404", "404Error"], ["Login", "Login"], ["Inscription", "Inscription"]];
 }

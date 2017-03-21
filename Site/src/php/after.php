@@ -22,11 +22,11 @@ require_once "before.php"
                     <p><a href="mailto:merkya@etml.educanet2.ch">merkya@etml.educanet2.ch</a></p>
                 </div>
             </div>
-        </footer>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../../resources/lib/jquery-3.1.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../../resources/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="../../resources/lib/jquery-3.1.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="../../resources/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        </footer>
     </body>
 </html>

@@ -4,7 +4,7 @@ require_once("before.php");
 
 //Vérifie si l'utilisateur est bien connecté pour afficher la page
 if ($_SESSION["userID"] == null) {
-    header("Location: /401Error");
+    header("Location: /Login");
     exit;
 }
 //TODO : Reremplir la page automatiquement en cas d'erreur au lieu de demander à l'utilisateur de tout retaper

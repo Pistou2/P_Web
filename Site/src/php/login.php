@@ -37,7 +37,7 @@ if (isset($_POST["email"]) && isset($_POST["pswd"])) {
         ?>
         <div class="alert alert-danger alert-dismissable">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p><strong>Erreur !</strong> Email ou mot de passe incorect.</p>
+            <p><strong>Erreur !</strong> Email ou mot de passe incorrect.</p>
         </div>
         <?php
 
