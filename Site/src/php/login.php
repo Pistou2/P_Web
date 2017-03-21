@@ -2,8 +2,6 @@
 $pageId = 5;
 require_once("before.php");
 
-//TODO : redirect / warn if the user is already logged
-
 //check if the user is already connected
 if (isset($_SESSION["userID"]) && $_SESSION["userID"] != null) {
     $_SESSION["mustShowPopup"] = true;
@@ -33,7 +31,6 @@ if (isset($_POST["email"]) && isset($_POST["pswd"])) {
         }
     } else {
         //if not, display an error
-        //TODO
         ?>
         <div class="alert alert-danger alert-dismissable">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -50,7 +47,10 @@ if (isset($_POST["email"]) && isset($_POST["pswd"])) {
                 <form method="post">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="email" type="text" class="form-control" name="email" placeholder="Email" required>
+                        <input id="email" type="text" class="form-control" name="email"
+                               placeholder="Email"
+                            <?php echo(isset($_POST["email"]) && $_POST["email"] != "" ? 'value="' . $_POST["email"] . '"' : "") ?>
+                               required>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>

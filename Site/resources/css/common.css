@@ -27,3 +27,15 @@ footer a:hover {
 footer a:focus {
     color: #00F;
 }
+
+textarea {
+    resize: vertical;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+.mChars {
+    color: red;
+}
