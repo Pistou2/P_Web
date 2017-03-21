@@ -21,7 +21,7 @@ CREATE TABLE t_books(
         booPageNumber  Int NOT NULL ,
         booExtractLink Varchar (50) ,
         booSummary     Varchar (5000) ,
-        booReleaseYear Date NOT NULL ,
+        booReleaseYear int NOT NULL ,
         booPictureLink Varchar (50) ,
         idBookType     Int NOT NULL ,
         idAuthor       Int NOT NULL ,
@@ -85,7 +85,7 @@ CREATE TABLE t_user(
         idUser           int (11) Auto_increment  NOT NULL ,
         useNickname      Varchar (30) NOT NULL ,
         useRegisteryDate Date NOT NULL ,
-        usePassword      Varchar (50) NOT NULL ,
+        usePassword      Varchar (80) NOT NULL ,
         PRIMARY KEY (idUser )
 )ENGINE=InnoDB;
 
