@@ -1,38 +1,59 @@
 <?php
 
-/**ETML
- *\author  merkya
- *\date    07.03.2017
- *\summary
- */
-class FormValidator
-{
-
-    /**Check if the email and the password inputed are correct
-     * TODO : Implement that with the Database
-     * for now it only ready the login from a login.txt file
-     * 1 ID + login + password per line, everything separated by a \t
-     * @param string $email
-     * @param string $password
-     * @return int If the login is successfull, return the user ID, else, null
+    /**ETML
+     *\author  merkya
+     *\date    07.03.2017
+     *\summary
      */
-    public static function checkLogin(string $email, string $password)
+    class FormValidator
     {
-        $loginFile = fopen("../../resources/login.txt", "r");
 
-        //do while we are logged or we reached the end of the file
-        do {
-            $currentLine = str_replace("\r\n", "", fgets($loginFile));
-            $lineParts = explode("\t",$currentLine,3);
-            //check the username
-            if ($lineParts[1] == $email) {
-                //check the password (limit of 3 in the explode to let the password contains tabs)
-                if (password_verify($password, $lineParts[2])) {
-                    return $lineParts[0];
+        /**Check if the email and the password inputed are correct
+         * TODO : Implement that with the Database
+         * for now it only ready the login from a login.txt file
+         * 1 ID + login + password per line, everything separated by a \t
+         * @param string $email
+         * @param string $password
+         * @return int If the login is successfull, return the user ID, else, null
+         */
+        public static function checkLogin(string $email, string $password)
+        {
+            $userData = DBCom::getUserData($email);
+
+            if ($userData){
+                if (password_verify($password, $userData[0]["usePassword"]));{
+                    return $userData[0]["idUser"];
                 }
             }
-        } while (!feof($loginFile));
-        //if we reached here, that mean we didn't matched anything
-        return null;
+
+            return null;
+        }
+
+        public static function checkRegister($email, $password, $passwordComfirmed)
+        {
+            $regEmail = '/^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i'; // Pris depuis https://regex101.com/library/mN1eF6
+            $regPassword = '/^.{8,}$/';
+
+            if (preg_match($regEmail, $email)) {
+                if ($password === $passwordComfirmed) {
+                    if (preg_match($regPassword, $password)) {
+                        if (!DBCom::getUserData($_POST["email"])) {
+                            return null;
+                        }
+                        else{
+                            return "Votre adresse email est déjà utilisée";
+                        }
+                    }
+                    else{
+                        return "Le mot de passe doit être de plus de 8 caractères";
+                    }
+                }
+                else{
+                    return "Les deux mots de passe indiquer ne correspondent pas";
+                }
+            }
+            else{
+                return "L'email n'est pas valide";
+            }
+        }
     }
-}
