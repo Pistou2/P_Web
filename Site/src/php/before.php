@@ -82,10 +82,10 @@ Description:
                         <?php
                             if ($isConnected) {
                                 echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>';
-                                echo '<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
+                                echo '<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
                             } else {
-                                echo '<li><a href="/Inscription"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
-                                echo '<li><a href="/login?previousPageID=' . $pageId . '"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                                echo '<li><a href="Inscription?previousPageID=' . $pageId . '""><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
+                                echo '<li><a href="login?previousPageID=' . $pageId . '"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
                             }
                         ?>
                     </ul>

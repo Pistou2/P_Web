@@ -13,6 +13,7 @@
         private static $dbUsername = 'root';
         private static $dbPassword = '.Etml-44';
 
+
         private static function getData($sql)
         {
             $dbConnection = new PDO(DBCom::$dbConParam, DBCom::$dbUsername, DBCom::$dbPassword);
@@ -20,7 +21,7 @@
             return $dbConnection->query($sql);
         }
 
-        public static function saveData($table, $rowValues)
+        private static function saveData($table, $rowValues)
         {
             $dbConnection = new PDO(DBCom::$dbConParam, DBCom::$dbUsername, DBCom::$dbPassword);
 
@@ -31,19 +32,25 @@
 
             $sql = "INSERT INTO ".$table." (".implode(", ", array_keys($rowValues)).") VALUES (".implode(", ", $values).");";
 
-            echo $sql;
-
             if($dbConnection->prepare($sql)->execute()){
+                unset($dbConnection);
                 return true;
             }
             else{
+                unset($dbConnection);
                 return false;
             }
+        }
+
+        public static function saveUserData($email, $hashedPassword, $registeryDate){
+            $values = ["useNickname" => $email, "usePassword" => $hashedPassword, "useRegisteryDate" => $registeryDate];
+
+            return self::saveData("t_user", $values);
         }
 
         public static function getUserData ($userEmail){
             $sql = "SELECT * FROM `t_user` WHERE `useNickname` = \"$userEmail\"";
 
-            return self::getData($sql);
+            return self::getData($sql)->fetchAll();
         }
     }
