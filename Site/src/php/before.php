@@ -60,7 +60,7 @@ Description:
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/"><?php echo GlobalValue::SITE_TITLE ?></a>
+                        <a class="navbar-brand" href="Accueil"><?php echo GlobalValue::SITE_TITLE ?></a>
                     </div>
 
                     <ul class="nav navbar-nav">

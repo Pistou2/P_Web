@@ -2,42 +2,39 @@
 $pageId = 5;
 require_once("before.php");
 
-//check if the user is already connected
+//Vérifie si l'utilisateur est connecté
 if (isset($_SESSION["userID"]) && $_SESSION["userID"] != null) {
     $_SESSION["mustShowPopup"] = true;
-    // redirect to the previous page, or the index page if none is inputed
-    if (isset($_GET["previousPageID"])) {
-        header("location: /" . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
+
+    //Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
+    //Et s'assure de ne pas rediriger vers la page actuel
+    if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
+        header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
     } else {
-        header("location: /");
+        header("location: Accueil");
     }
 }
 
-//check if there's an attempt to login
+//Regarde si il y a une tentative de connexion
 if (isset($_POST["email"]) && isset($_POST["pswd"])) {
 
-    //check if the log is successfull or no
+    //vérifie si la connection réussi
     $userID = FormValidator::checkLogin($_POST["email"], $_POST["pswd"]);
 
     if ($userID != null) {
         $_SESSION["userID"] = $userID;
         $_SESSION["mustShowPopup"] = true;
 
-        // redirect to the previous page, or the index page if none is inputed
-        if (isset($_GET["previousPageID"])) {
-            header("location: /" . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
+        //Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
+        //Et s'assure de ne pas rediriger vers la page actuel
+        if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
+            header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
         } else {
-            header("location: /");
+            header("location: Accueil");
         }
     } else {
-        //if not, display an error
-        ?>
-        <div class="alert alert-danger alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p><strong>Erreur !</strong> Email ou mot de passe incorrect.</p>
-        </div>
-        <?php
-
+        //si non, affiche une erreur
+        Misc::writeMessage(3, '<strong>Erreur !</strong> Email ou mot de passe incorrect.');
     }
 }
 ?>
@@ -49,7 +46,8 @@ if (isset($_POST["email"]) && isset($_POST["pswd"])) {
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         <input id="email" type="text" class="form-control" name="email"
                                placeholder="Email"
-                            <?php echo(isset($_POST["email"]) && $_POST["email"] != "" ? 'value="' . $_POST["email"] . '"' : "") ?>
+                            <?php /*Remet la valeure précédente de l'email en cas d'échec si elle existe*/
+                            echo(isset($_POST["email"]) && $_POST["email"] != "" ? 'value="' . $_POST["email"] . '"' : "") ?>
                                required>
                     </div>
                     <div class="input-group">

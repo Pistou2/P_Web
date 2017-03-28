@@ -8,6 +8,7 @@
     class FormValidator
     {
 
+
         /**Check if the email and the password inputed are correct
          * TODO : Implement that with the Database
          * for now it only ready the login from a login.txt file
@@ -57,3 +58,45 @@
             }
         }
     }
+
+
+    //TODO
+    public static function checkAddBook(array $postResult)
+    {
+        $isCorrect = true;
+
+        //Vérifie que le nom du livre est set et non vide
+        if (!isset($postResult["bookName"]) || $postResult["bookName"] == "") {
+            $isCorrect = false;
+            //Write an error
+            Misc::writeMessage(3,"<strong>Erreur !</strong> Nom de livre incorrect.");
+        }
+
+        //Vérifier que le nom et prénom de l'auteur est set et non vide
+        //TODO : Vérifier si il n'existe pas déjà ???
+        if ((!isset($postResult["authorName"]) || $postResult["authorName"] == "")&&(!isset($postResult["authorFirstname"]) || $postResult["authorFirstname"] == "")) {
+            $isCorrect = false;
+            //Write an error
+            Misc::writeMessage(3,"<strong>Erreur !</strong> Nom ou Prénom de l'auteur incorrect.");
+        }
+
+        //Vérifie que l'éditeur est set et non vide
+        //TODO : Vérifier si il n'existe pas déjà ???
+        if (!isset($postResult["editor"]) || $postResult["editor"] == "") {
+            $isCorrect = false;
+            //Write an error
+            Misc::writeMessage(3,"<strong>Erreur !</strong> Éditeur incorrect.");
+        }
+
+        //Vérifie que le type de livre est set et non vide
+        //TODO : Vérifier si il n'existe pas déjà ???
+        if (!isset($postResult["selType"]) || $postResult["selType"] == "") {
+            $isCorrect = false;
+            //Write an error
+            Misc::writeMessage(3,"<strong>Erreur !</strong> Prière de choisir un type de livre correct");
+        }
+
+
+        return $isCorrect;
+    }
+}

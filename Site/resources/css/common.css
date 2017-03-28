@@ -1,6 +1,6 @@
 /*
 ETML
-Author: 
+Author: Clément Dieperink
 Date: 
 Summary: 
 */
@@ -28,14 +28,16 @@ footer a:focus {
     color: #00F;
 }
 
+/* Ne permet pas de chnager la largeur des textarea */
 textarea {
     resize: vertical;
 }
 
 .row {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
+/* Pour les asterisks indiquant les champs obligatoires*/
 .mChars {
     color: red;
 }
