@@ -7,6 +7,6 @@
 //TODO Boucler sur toutes les lignes de livres
 ?>
 
-<div class="row"></div>
+    <div class="row"></div>
 <?php
-    require_once ("after.php");
+    require_once("after.php");

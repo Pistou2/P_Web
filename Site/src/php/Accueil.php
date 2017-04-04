@@ -3,4 +3,4 @@
     require_once("before.php");
 ?>
 <?php
-    require_once ("after.php");
+    require_once("after.php");

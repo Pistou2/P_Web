@@ -7,6 +7,8 @@ Summary:
 
 body {
     background-color: #eaeaea;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
 }
 
 .head, .jumbotron {

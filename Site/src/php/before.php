@@ -138,9 +138,9 @@ Description:
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <p>Vous vous êtes bien déconnecté.</p>
                     </div>
-                    <?php
-                        }
+<?php
+    }
 
-                        $_SESSION["mustShowPopup"] = false;
-                        }
-                    ?>
+    $_SESSION["mustShowPopup"] = false;
+    }
+?>
