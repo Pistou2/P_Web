@@ -10,6 +10,15 @@ Description:
 <?php
     session_start();
 
+    // Pour inclure automatiquement les classes
+    spl_autoload_register(function ($class) {
+        include_once "classes/$class.php";
+    });
+
+    if (!isset($pageTitle)) {
+        $pageTitle = GlobalValue::PAGES_ARRAY["$pageId"][0];
+    }
+
     if (!isset($_SESSION["userID"])) {
         $_SESSION["userID"] = null;
     }
@@ -17,11 +26,6 @@ Description:
     if (!isset($_SESSION["mustShowPopup"])) {
         $_SESSION["mustShowPopup"] = false;
     }
-
-    // Pour inclure automatiquement les classes
-    spl_autoload_register(function ($class) {
-        include_once "classes/$class.php";
-    });
 
     $isConnected = $_SESSION["userID"] != null;
 
@@ -33,6 +37,7 @@ Description:
     4 : 404Error
     5 : Login
     6 : Inscription
+    7 : ShowBook
     */
 ?>
 <html lang="fr">
@@ -41,7 +46,7 @@ Description:
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title><?php echo GlobalValue::PAGES_ARRAY[$pageId][0] . " - " . GlobalValue::SITE_TITLE ?></title>
+        <title><?php echo $pageTitle . " - " . GlobalValue::SITE_TITLE ?></title>
 
         <!-- Bootstrap -->
         <link type="text/css" href="resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -92,7 +97,7 @@ Description:
                 </div>
             </nav>
             <div class="jumbotron text-center">
-                <h1><?php echo GlobalValue::PAGES_ARRAY[$pageId][0] ?></h1>
+                <h1><?php echo $pageTitle ?></h1>
             </div>
         </div>
         <div id="container">
