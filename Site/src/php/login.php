@@ -20,8 +20,6 @@
 
         //vérifie si la connection réussi
 
-        echo $_POST["email"];
-
         $userID = FormValidator::checkLogin($_POST["email"], $_POST["pswd"]);
 
         if ($userID != null) {
@@ -29,8 +27,8 @@
             $_SESSION["mustShowPopup"] = true;
 
             //Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
-            //Et s'assure de ne pas rediriger vers la page actuel
-            if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
+            //Et s'assure de ne pas rediriger vers la page actuel ou la page d'inscription
+            if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId && $_GET["previousPageID"] != GlobalValue::ID_PAGE_INSCRIPTION) {
                 header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
             } else {
                 header("location: Accueil");

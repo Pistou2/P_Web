@@ -7,11 +7,12 @@
     $books = DBCom::getAllBooks();
     if (count($books) > 0) {
 
-        //TODO Boucler sur toutes les lignes de livres
+        //Boucle sur toutes les lignes de livres
         foreach ($books as $book) {
-            echo '<div class="bookElement col-sm-2">';
-                echo'   <p>'.$book['booTitle'].'</p>';
-            echo'</div>';
+            echo '<a href="/ShowBook?bookId=' . $book['idBook'] . '"><div class="bookElement col-sm-4">';
+            echo '   <p>' . $book['booTitle'] . '</p>';
+            echo '   <img src="userContent/Book_Cover/' . $book['booPictureLink'] . '" alt="[Couverture de livre]">';
+            echo '</div></a>';
         }
     } else {
         Misc::writeMessage(2, "Il n'y a aucun livre pour le moment T-T");

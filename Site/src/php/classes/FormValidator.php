@@ -10,9 +10,6 @@
 
 
         /**Check if the email and the password inputed are correct
-         * TODO : Implement that with the Database
-         * for now it only ready the login from a login.txt file
-         * 1 ID + login + password per line, everything separated by a \t
          * @param string $email
          * @param string $password
          * @return int If the login is successfull, return the user ID, else, null

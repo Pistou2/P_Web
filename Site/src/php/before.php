@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-
 <!--
-ETML
-Auteur: Clément Dieperink
+Auteurs: Clément Dieperink + Yann Merk
 Date: 14.02.2017
 Description:
 -->
@@ -49,9 +47,9 @@ Description:
         <title><?php echo $pageTitle . " - " . GlobalValue::SITE_TITLE ?></title>
 
         <!-- Bootstrap -->
-        <link type="text/css" href="resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-        <link type="text/css" href="resources/css/common.css" rel="stylesheet">
-        <link href="resources/image/book-256.ico" rel="icon">
+        <link type="text/css" href="/resources/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="/resources/css/common.css" rel="stylesheet">
+        <link href="/resources/image/book-256.ico" rel="icon">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
