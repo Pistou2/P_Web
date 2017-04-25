@@ -10,9 +10,7 @@
 //check if a post has been already made or no
     if (isset($_POST) && count($_POST) > 0) {
         //if Yes, check if the inputs are correct or no, and write errors according to that
-        /*if (FormValidator::checkAddBook($_POST)) {
-            //TODO : Upload the book
-        }*/
+        FormValidator::checkAddBook($_POST);
     }
 //TODO : Reremplir la page automatiquement en cas d'erreur au lieu de demander à l'utilisateur de tout retaper
 //TODO : à la correction vérifier le nom de l'auteur, en chercher des avec un nom semblable à celui entré, ou avertir avant d'en créer un nouveau
@@ -58,8 +56,11 @@
                         ?>
                         <div class="checkbox">
                             <label data-toggle="tooltip" data-placement="bottom"
-                                   title="<?php echo $allCategory[$i]["catDescription"] ?>"><input type="checkbox"
-                                                                                                   name="bookCategory[<?php echo $i ?>]"/> <?php echo $allCategory[$i]['catName'] ?>
+                                   title="<?php echo $allCategory[$i]["catDescription"] ?>">
+                                <input type="checkbox"
+                                       name="bookCategory[<?php echo $allCategory[$i]['idCategory'] ?>]"
+                                    <?php echo isset($_POST['bookCategory'][$allCategory[$i]['idCategory']]) ? "checked" : "" ?>/>
+                                <?php echo $allCategory[$i]['catName'] ?>
                             </label>
                         </div>
                         <?php

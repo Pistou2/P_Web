@@ -53,13 +53,21 @@
         }
 
 
-        //TODO
+        //TODO Gérer les images
+        //TODO gérer description vide
+        //TODO gérer auteur
+        //todo gérer éditeur
         public static function checkAddBook(array $postResult)
         {
             $isCorrect = true;
 
+            //TODO
+            echo "<pre>";
+            print_r($postResult);
+            echo "</pre>";
+
             //Vérifie que le nom du livre est set et non vide
-            if (!empty($postResult["bookName"])) {
+            if (empty($postResult["bookName"])) {
                 $isCorrect = false;
                 //Write an error
                 Misc::writeMessage(3, "<strong>Erreur !</strong> Nom de livre incorrect.");
@@ -67,7 +75,7 @@
 
             //Vérifier que le nom et prénom de l'auteur est set et non vide
             //TODO : Vérifier si il n'existe pas déjà ???
-            if (!empty($postResult["authorName"]) && !empty($postResult["authorFirstname"])) {
+            if (empty($postResult["authorName"]) || empty($postResult["authorFirstname"])) {
                 $isCorrect = false;
                 //Write an error
                 Misc::writeMessage(3, "<strong>Erreur !</strong> Nom ou Prénom de l'auteur incorrect.");
@@ -75,19 +83,45 @@
 
             //Vérifie que l'éditeur est set et non vide
             //TODO : Vérifier si il n'existe pas déjà ???
-            if (!empty($postResult["editor"])) {
+            if (empty($postResult["editor"])) {
                 $isCorrect = false;
                 //Write an error
                 Misc::writeMessage(3, "<strong>Erreur !</strong> Éditeur incorrect.");
             }
 
+            //Vérifie qu'au moins une catégorie de livre est sélectionnée
+            if (empty($postResult['bookCategory']) || count($postResult['bookCategory']) == 0) {
+                $isCorrect = false;
+                //Write an error
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir au moins une catégorie de livre");
+            }
+
             //Vérifie que le type de livre est set et non vide
             //TODO : Vérifier si il n'existe pas déjà ???
-            if (!empty($postResult["selType"])) {
+            if (empty($postResult["selType"])) {
                 $isCorrect = false;
                 //Write an error
                 Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir un type de livre correct");
             }
+
+            //Vérifie que le nombre de page est set et non vide
+            if (empty($postResult["nbPage"])) {
+                $isCorrect = false;
+                //Write an error
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de rentrer un nombre de page.");
+            }
+
+            //Vérifie que l'année de parution est set et est un integer
+            if (empty($postResult["releaseYear"]) || !ctype_digit($postResult["releaseYear"]) ) {
+                $isCorrect = false;
+                //Write an error
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de rentrer une année de parution correcte");
+            }
+
+            //Set l'utilisateur
+            $postResult["idUser"] = $_SESSION["userID"];
+
+            DBCom::addBook($postResult);
 
             return $isCorrect;
         }

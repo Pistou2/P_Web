@@ -89,4 +89,19 @@
 
             return self::getData($sql);
         }
+
+        //TODO Images
+        //TODO auteur, éditeur
+        public static function addBook(array $verifiedPostArray)
+        {
+            try {
+                $values = ["booTitle" => $verifiedPostArray['bookName'], "booPageNumber" => $verifiedPostArray['nbPage'], "booExtractLink" => "TODO", "booSummary" => $verifiedPostArray['summary'], "booReleaseYear" => $verifiedPostArray['releaseYear'], "booPictureLink" => "TODO", "idBookType" => $verifiedPostArray['selType'], "idAuthor" => 0, "idEditor" => 0, "idUser" => $verifiedPostArray['idUser']];
+
+                self::saveData("t_books",$values);
+                return true;
+            } catch (mysqli_sql_exception $exception) {
+                print_r($exception);
+                return false;
+            }
+        }
     }
