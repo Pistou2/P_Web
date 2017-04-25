@@ -56,11 +56,24 @@
 
         public static function getAllBooks()
         {
-            //TODO Paramètre optionnel pour recherche?
+            //TODO Paramètre optionnel pour recherche ?
 
             $sql = "SELECT * FROM `t_books`;";
 
             return self::getData($sql, PDO::FETCH_ASSOC);
+        }
+
+        public static function getBookWithId($bookId)
+        {
+            $sql = "SELECT booTitle, booPageNumber, booExtractLink, booSummary, booReleaseYear, booPictureLink, autName, autFirstname, btName, ediName, useNickname\n"
+                ."FROM `t_books`\n"
+            . "NATURAL JOIN t_author\n"
+            . "NATURAL JOIN t_booktype\n"
+            . "NATURAL JOIN t_editor\n"
+            . "NATURAL JOIN t_user\n"
+            . "WHERE idBook = $bookId";
+
+            return self::getData($sql);
         }
 
         public static function getAllCategory()

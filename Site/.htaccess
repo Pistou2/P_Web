@@ -4,6 +4,7 @@ ErrorDocument 404 /src/php/404Error.php
 DirectoryIndex src/php/Accueil.php
 
 RewriteEngine On
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ ./src/php/$1.php [NC,L]
