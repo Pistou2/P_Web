@@ -10,7 +10,7 @@
 
             foreach ($books as $book) {
     ?>
-    <a href="/ShowBook?bookId=<?php echo $book['idBook'] ?>">
+    <a href="ShowBook?bookId=<?php echo $book['idBook'] ?>">
         <div class="bookElement col-sm-2">
             <p>
                 <?php echo $book['booTitle'] ?>
