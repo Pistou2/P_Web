@@ -90,6 +90,22 @@
             return self::getData($sql);
         }
 
+        public static function getAllCategoryForABook ($bookId)
+        {
+            $sql = "SELECT catName, catDescription FROM `t_category`";
+            $sql .= " NATURAL JOIN `t_categorize`";
+            $sql .= " WHERE idBook = $bookId";
+
+            return self::getData($sql);
+        }
+
+        public static function getFiveLastBook ()
+        {
+            $sql = "SELECT * FROM `t_books` ORDER BY `idBook` DESC LIMIT 5";
+
+            return self::getData($sql);
+        }
+
         //TODO Images
         //TODO auteur, éditeur
         public static function addBook(array $verifiedPostArray)

@@ -57,3 +57,13 @@ textarea {
     width: auto;
     max-width: 100%;
 }
+
+#bookCover {
+    width: 100%;
+    max-width: 400px;
+}
+
+iframe#bookExtract {
+    width: 100%;
+    height: 800px;
+}
