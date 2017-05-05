@@ -10,7 +10,7 @@
 //check if a post has been already made or no
     if (isset($_POST) && count($_POST) > 0) {
         //if Yes, check if the inputs are correct or no, and write errors according to that
-        FormValidator::checkAddBook($_POST);
+        FormValidator::checkAddBook($_POST, $_FILES);
     }
 //TODO : Reremplir la page automatiquement en cas d'erreur au lieu de demander à l'utilisateur de tout retaper
 //TODO : à la correction vérifier le nom de l'auteur, en chercher des avec un nom semblable à celui entré, ou avertir avant d'en créer un nouveau
@@ -58,7 +58,7 @@
                             <label data-toggle="tooltip" data-placement="bottom"
                                    title="<?php echo $allCategory[$i]["catDescription"] ?>">
                                 <input type="checkbox"
-                                       name="bookCategory[<?php echo $allCategory[$i]['idCategory'] ?>]"
+                                       name="bookCategory[]" value="<?php echo $allCategory[$i]['idCategory'] ?>"
                                     <?php echo isset($_POST['bookCategory'][$allCategory[$i]['idCategory']]) ? "checked" : "" ?>/>
                                 <?php echo $allCategory[$i]['catName'] ?>
                             </label>
@@ -75,7 +75,7 @@
 
                         for ($i = 0; $i < count($allType); $i++) {
                             ?>
-                            <option><?php echo $allType[$i]['btName'] ?></option>
+                            <option value="<?php echo $allType[$i]['idBookType'] ?>"><?php echo $allType[$i]['btName'] ?></option>
                             <?php
                         }
                     ?>
@@ -103,11 +103,11 @@
                   name="summary"><?php echo isset($_POST["summary"]) ? $_POST["summary"] : "" ?></textarea>
         <div class="row">
             <div class="col-sm-6">
-                <label for="bookPicture">Photo de couverture : </label>
+                <label for="bookPicture">Photo de couverture : <span class="mChars">*</span></label>
                 <input type="file" class="form-control" id="bookPicture" name="bookPicture">
             </div>
             <div class="col-sm-6">
-                <label for="bookExtract">Extrait (image) : </label>
+                <label for="bookExtract">Extrait (PDF uniquement) : </label>
                 <input type="file" class="form-control" id="bookExtract" name="bookExtract">
             </div>
         </div>

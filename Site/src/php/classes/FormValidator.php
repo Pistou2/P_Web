@@ -57,13 +57,14 @@
         //TODO gérer description vide
         //TODO gérer auteur
         //todo gérer éditeur
-        public static function checkAddBook(array $postResult)
+        public static function checkAddBook(array $postResult, array $fileResult)
         {
             $isCorrect = true;
 
             //TODO
             echo "<pre>";
             print_r($postResult);
+            print_r($fileResult);
             echo "</pre>";
 
             //Vérifie que le nom du livre est set et non vide
@@ -93,7 +94,7 @@
             if (empty($postResult['bookCategory']) || count($postResult['bookCategory']) == 0) {
                 $isCorrect = false;
                 //Write an error
-                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir au moins une catégorie de livre");
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir au moins une catégorie de livre.");
             }
 
             //Vérifie que le type de livre est set et non vide
@@ -101,7 +102,7 @@
             if (empty($postResult["selType"])) {
                 $isCorrect = false;
                 //Write an error
-                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir un type de livre correct");
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de choisir un type de livre correct.");
             }
 
             //Vérifie que le nombre de page est set et non vide
@@ -112,16 +113,71 @@
             }
 
             //Vérifie que l'année de parution est set et est un integer
-            if (empty($postResult["releaseYear"]) || !ctype_digit($postResult["releaseYear"]) ) {
+            if (empty($postResult["releaseYear"]) || !ctype_digit($postResult["releaseYear"])) {
                 $isCorrect = false;
                 //Write an error
-                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de rentrer une année de parution correcte");
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Prière de rentrer une année de parution correcte.");
             }
 
-            //Set l'utilisateur
-            $postResult["idUser"] = $_SESSION["userID"];
+            //vérifier que l'image de couverture a bien été envoyée
+            if ($fileResult['bookPicture']['error'] != 0) {
+                $isCorrect = false;
+                //Ecrit une erreur
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Une image de couverture doit être incluse.");
+            }          //vérifier que l'image de couverture est correct
+            elseif (explode("/", $fileResult['bookPicture']['type'])[0] != "image") {
+                $isCorrect = false;
+                //Write an error
+                Misc::writeMessage(3, "<strong>Erreur !</strong> L'image de couverture soumise n'est pas valide / Une erreur est survenue lors de l'envoi.");
+            }
 
-            DBCom::addBook($postResult);
+            //vérifier que si un extrait est envoyé, il est valide
+            if ($fileResult['bookExtract']['error'] != 4 && ($fileResult['bookExtract']['error'] != 0 || $fileResult['bookExtract']['type'] != "application/pdf")) {
+                $isCorrect = false;
+                //Ecrit une erreur
+                Misc::writeMessage(3, "<strong>Erreur !</strong> Le format de l'extrait soumis n'est pas valide / Une erreur est survenue lors de l'envoi.<br>(Seuls les PDF sont autorisés)");
+            }
+            //si tout est correct
+            if ($isCorrect) {
+
+                //upload la couverture
+                $extensionFile = end(explode(".", $fileResult['bookPicture']['name']));
+                $destinDirectory = "../../userContent/Book_Cover/";
+                $destinName = strval(date("Y-m-d-h-i-s", time())) . "." . $extensionFile;
+
+                move_uploaded_file($fileResult['bookPicture']['tmp_name'], $destinDirectory . $destinName);
+
+                $postResult['bookPicture'] = $destinName;
+
+                //upload l'extrait, si il existe
+                if (isset($fileResult['bookExtract'])) {
+                    $extensionFile = end(explode(".", $fileResult['bookExtract']['name']));
+                    $destinDirectory = "../../userContent/Book_Extract/";
+                    $destinName = strval(date("Y-m-d-h-i-s", time())) . "." . $extensionFile;
+
+                    move_uploaded_file($fileResult['bookExtract']['tmp_name'], $destinDirectory . $destinName);
+
+                    $postResult['bookExtract'] = $destinName;
+                }
+
+                //Todo Message d'avertissement en cas de nouvel auteur / éditeur
+                //Récupère l'id de l'auteur
+                $answer = DBCom::getAuthor($postResult['authorName'], $postResult['authorFirstname']);
+
+                $postResult['idAuthor'] = $answer[0];
+
+                //Récupère l'id de l'éditeur
+                $answer = DBCom::getEditor($postResult['editor']);
+
+                $postResult['idEditor'] = $answer[0];
+
+
+                //Set l'utilisateur
+                $postResult["idUser"] = $_SESSION["userID"];
+
+
+                DBCom::addBook($postResult);
+            }
 
             return $isCorrect;
         }

@@ -49,9 +49,18 @@
 
         private static function getData(string $sql, int $fetchType = PDO::FETCH_BOTH)
         {
+
             $dbConnection = new PDO(DBCom::$dbConParam, DBCom::$dbUsername, DBCom::$dbPassword);
 
-            return $dbConnection->query($sql)->fetchAll($fetchType);
+            $result = $dbConnection->query($sql);
+
+            //fetch uniquement si le résultat n'est pas vide
+            if ($result != null) {
+                $result = $result->fetchAll($fetchType);
+            }
+
+            unset($dbConnection);
+            return $result;
         }
 
         public static function getAllBooks()
@@ -66,12 +75,12 @@
         public static function getBookWithId($bookId)
         {
             $sql = "SELECT booTitle, booPageNumber, booExtractLink, booSummary, booReleaseYear, booPictureLink, autName, autFirstname, btName, ediName, useNickname\n"
-                ."FROM `t_books`\n"
-            . "NATURAL JOIN t_author\n"
-            . "NATURAL JOIN t_booktype\n"
-            . "NATURAL JOIN t_editor\n"
-            . "NATURAL JOIN t_user\n"
-            . "WHERE idBook = $bookId";
+                . "FROM `t_books`\n"
+                . "NATURAL JOIN t_author\n"
+                . "NATURAL JOIN t_booktype\n"
+                . "NATURAL JOIN t_editor\n"
+                . "NATURAL JOIN t_user\n"
+                . "WHERE idBook = $bookId";
 
             return self::getData($sql);
         }
@@ -90,7 +99,7 @@
             return self::getData($sql);
         }
 
-        public static function getAllCategoryForABook ($bookId)
+        public static function getAllCategoryForABook($bookId)
         {
             $sql = "SELECT catName, catDescription FROM `t_category`";
             $sql .= " NATURAL JOIN `t_categorize`";
@@ -99,25 +108,101 @@
             return self::getData($sql);
         }
 
-        public static function getFiveLastBook ()
+        public static function getFiveLastBook()
         {
             $sql = "SELECT * FROM `t_books` ORDER BY `idBook` DESC LIMIT 5";
 
             return self::getData($sql);
         }
 
-        //TODO Images
-        //TODO auteur, éditeur
         public static function addBook(array $verifiedPostArray)
         {
             try {
-                $values = ["booTitle" => $verifiedPostArray['bookName'], "booPageNumber" => $verifiedPostArray['nbPage'], "booExtractLink" => "TODO", "booSummary" => $verifiedPostArray['summary'], "booReleaseYear" => $verifiedPostArray['releaseYear'], "booPictureLink" => "TODO", "idBookType" => $verifiedPostArray['selType'], "idAuthor" => 0, "idEditor" => 0, "idUser" => $verifiedPostArray['idUser']];
+                $values = ["booTitle" => $verifiedPostArray['bookName'], "booPageNumber" => $verifiedPostArray['nbPage'], "booExtractLink" => $verifiedPostArray['bookExtract'], "booSummary" => $verifiedPostArray['summary'], "booReleaseYear" => $verifiedPostArray['releaseYear'], "booPictureLink" => $verifiedPostArray['bookPicture'], "idBookType" => $verifiedPostArray['selType'], "idAuthor" => $verifiedPostArray['idAuthor'], "idEditor" => $verifiedPostArray['idEditor'], "idUser" => $verifiedPostArray['idUser']];
 
-                self::saveData("t_books",$values);
+                self::saveData("t_books", $values);
+
+                //Récupère le numéro du livre
+                $idBook = self::getLastInsertId();
+
+                //Ajoute les catégories
+                foreach ($verifiedPostArray['bookCategory'] as $category) {
+                    self::saveData("t_categorize", ["idBook" => $idBook, "idCategory" => $category]);
+                }
+
                 return true;
             } catch (mysqli_sql_exception $exception) {
                 print_r($exception);
                 return false;
             }
         }
+
+        private static function getLastInsertId()
+        {
+            $dbConnection = new PDO(DBCom::$dbConParam, DBCom::$dbUsername, DBCom::$dbPassword);
+
+            $result = $dbConnection->lastInsertId();
+
+            unset($dbConnection);
+            return $result;
+        }
+
+        /**
+         * @param string $name
+         * @param string $firstname
+         * @return array Un tableau contenant l'id de l'auteur, et un bool indiquant si il a du être créé ou non
+         */
+        public static function getAuthor(string $name, string $firstname)
+        {
+            //chercher le nom et prénom dans la base de donnée
+            $sql = "SELECT `idAuthor` FROM `t_author` WHERE `autName` = \"$name\" AND `autFirstname` = \"$firstname\"";
+
+            $output[0] = self::getData($sql);
+
+            //Si l'auteur est déjà dans la base de donnée
+            if ($output[0] != null) {
+                //retourne simplement son ID
+                $output[0] = $output[0][0][0];
+                $output[1] = false;
+
+                return $output;
+            } else {
+
+                //l'ajoute à la base de donnée, et renvoie son ID
+                $output[1] = true;
+                self::saveData("t_author", array("autName" => $name, "autFirstname" => $firstname));
+                $output[0] = self::getLastInsertId();
+
+                return $output;
+            }
+
+        }
+
+        /**
+         * @param string $name
+         * @return array Un tableau contenant l'id de l'éditeur, et un bool indiquant si il a du être créé ou non
+         */
+        public static function getEditor(string $name)
+        {
+            //chercher le nom et prénom dans la base de donnée
+            $sql = "SELECT `idEditor` FROM `t_editor` WHERE `ediName` = \"$name\"";
+
+            $output[0] = self::getData($sql);
+
+            //Si l'éditeur est déjà dans la base de donnée
+            if ($output[0] != null) {
+                //retourne simplement son ID
+                $output[0] = $output[0][0][0];
+                $output[1] = false;
+                return $output;
+            } else {
+                //l'ajoute à la base de donnée, et renvoie son ID
+                $output[1] = true;
+                self::saveData("t_editor", array("ediName" => $name));
+                $output[0] = self::getLastInsertId();
+                return $output;
+            }
+
+        }
+
     }
