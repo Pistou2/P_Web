@@ -32,11 +32,12 @@
             $sql = "INSERT INTO " . $table . " (" . implode(", ", array_keys($rowValues)) . ") VALUES (" . implode(", ", $values) . ");";
 
             if ($dbConnection->prepare($sql)->execute()) {
+                $lastId= $dbConnection->lastInsertId();
                 unset($dbConnection);
-                return true;
+                return $lastId;
             } else {
                 unset($dbConnection);
-                return false;
+                return 0;
             }
         }
 
@@ -120,10 +121,8 @@
             try {
                 $values = ["booTitle" => $verifiedPostArray['bookName'], "booPageNumber" => $verifiedPostArray['nbPage'], "booExtractLink" => $verifiedPostArray['bookExtract'], "booSummary" => $verifiedPostArray['summary'], "booReleaseYear" => $verifiedPostArray['releaseYear'], "booPictureLink" => $verifiedPostArray['bookPicture'], "idBookType" => $verifiedPostArray['selType'], "idAuthor" => $verifiedPostArray['idAuthor'], "idEditor" => $verifiedPostArray['idEditor'], "idUser" => $verifiedPostArray['idUser']];
 
-                self::saveData("t_books", $values);
-
                 //Récupère le numéro du livre
-                $idBook = self::getLastInsertId();
+                $idBook = self::saveData("t_books", $values);
 
                 //Ajoute les catégories
                 foreach ($verifiedPostArray['bookCategory'] as $category) {
@@ -135,16 +134,6 @@
                 print_r($exception);
                 return false;
             }
-        }
-
-        private static function getLastInsertId()
-        {
-            $dbConnection = new PDO(DBCom::$dbConParam, DBCom::$dbUsername, DBCom::$dbPassword);
-
-            $result = $dbConnection->lastInsertId();
-
-            unset($dbConnection);
-            return $result;
         }
 
         /**
@@ -169,9 +158,8 @@
             } else {
 
                 //l'ajoute à la base de donnée, et renvoie son ID
+                $output[0] = self::saveData("t_author", array("autName" => $name, "autFirstname" => $firstname));
                 $output[1] = true;
-                self::saveData("t_author", array("autName" => $name, "autFirstname" => $firstname));
-                $output[0] = self::getLastInsertId();
 
                 return $output;
             }
@@ -197,9 +185,8 @@
                 return $output;
             } else {
                 //l'ajoute à la base de donnée, et renvoie son ID
+                $output[0] = self::saveData("t_editor", array("ediName" => $name));
                 $output[1] = true;
-                self::saveData("t_editor", array("ediName" => $name));
-                $output[0] = self::getLastInsertId();
                 return $output;
             }
 
