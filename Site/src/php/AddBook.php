@@ -10,7 +10,12 @@
 //check if a post has been already made or no
     if (isset($_POST) && count($_POST) > 0) {
         //if Yes, check if the inputs are correct or no, and write errors according to that
-        FormValidator::checkAddBook($_POST, $_FILES);
+        $bookId = FormValidator::checkAddBook($_POST, $_FILES);
+        
+        if($bookId!=null){
+            header('location: ShowBook?bookId='.$bookId);
+            exit;
+        }        
     }
 //TODO : Reremplir la page automatiquement en cas d'erreur au lieu de demander à l'utilisateur de tout retaper
 //TODO : à la correction vérifier le nom de l'auteur, en chercher des avec un nom semblable à celui entré, ou avertir avant d'en créer un nouveau
@@ -59,7 +64,7 @@
                                    title="<?php echo $allCategory[$i]["catDescription"] ?>">
                                 <input type="checkbox"
                                        name="bookCategory[]" value="<?php echo $allCategory[$i]['idCategory'] ?>"
-                                    <?php echo isset($_POST['bookCategory'][$allCategory[$i]['idCategory']]) ? "checked" : "" ?>/>
+                                    <?php echo isset($_POST['bookCategory']) && in_array($allCategory[$i]['idCategory'],$_POST['bookCategory']) ? "checked" : "" ?>/>
                                 <?php echo $allCategory[$i]['catName'] ?>
                             </label>
                         </div>
@@ -75,7 +80,7 @@
 
                         for ($i = 0; $i < count($allType); $i++) {
                             ?>
-                            <option value="<?php echo $allType[$i]['idBookType'] ?>"><?php echo $allType[$i]['btName'] ?></option>
+                            <option value="<?php echo $allType[$i]['idBookType'] ?>" <?php echo isset($_POST['selType']) && $_POST['selType'] == $allType[$i]['idBookType'] ? "selected" : ""?>><?php echo $allType[$i]['btName'] ?></option>
                             <?php
                         }
                     ?>

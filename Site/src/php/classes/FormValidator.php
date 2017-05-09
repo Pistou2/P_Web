@@ -61,12 +61,6 @@
         {
             $isCorrect = true;
 
-            //TODO
-            echo "<pre>";
-            print_r($postResult);
-            print_r($fileResult);
-            echo "</pre>";
-
             //Vérifie que le nom du livre est set et non vide
             if (empty($postResult["bookName"])) {
                 $isCorrect = false;
@@ -176,9 +170,9 @@
                 $postResult["idUser"] = $_SESSION["userID"];
 
 
-                DBCom::addBook($postResult);
+                return DBCom::addBook($postResult);
             }
 
-            return $isCorrect;
+            return false;
         }
     }

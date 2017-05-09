@@ -129,10 +129,11 @@
                     self::saveData("t_categorize", ["idBook" => $idBook, "idCategory" => $category]);
                 }
 
-                return true;
+                //renvoie l'id du livre
+                return $idBook;
             } catch (mysqli_sql_exception $exception) {
                 print_r($exception);
-                return false;
+                return null;
             }
         }
 
