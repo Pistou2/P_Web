@@ -82,6 +82,10 @@ iframe#bookExtract {
     font-size: 30px;
 }
 
+#rating #numberOfNote {
+    font-size: 20px;
+}
+
 /* Taille pour la note de l'utilisateur */
 #currentRate {
     font-size: 20px;

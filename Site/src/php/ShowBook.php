@@ -120,7 +120,7 @@
                         $rateAverage = $rateSum / count($bookRates);
 
                         // Affiche la moyenne arrondie au dixième
-                        echo "<p>" . round($rateAverage, 1) . "</p>";
+                        echo "<p>" . round($rateAverage, 1) . " <span id='numberOfNote'>". count($bookRates) ." notes</span></p>";
                     }
 
                     echo "<p>";
