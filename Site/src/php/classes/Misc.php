@@ -1,21 +1,23 @@
 <?php
 
-    /**ETML
-     *\author  merkya
-     *\date    28.03.2017
-     *\summary
+    /*
+         ETML
+         Auteur: Yann Merk
+         Date: 28.03.17
+         Description: Class permettant l'affichage d'erreur sur une page
      */
+
     class Misc
     {
         /**
-         * @param int $type The type of message wanted   0 = Success, 1 = Info, 2 = Warning, default = Error
-         * @param string $content
+         * @param int $type Le type de message voulue 0 = R�ussi, 1 = Info, 2 = Attention, d�faut = erreur
+         * @param string $content Contenu du message
          */
         public static function writeMessage(int $type, string $content)
         {
             echo '<div class="alert ';
 
-            //Choose what type of alert display
+            //Choisi quel type d'alert � afficher
             switch ($type) {
 
                 case 0:

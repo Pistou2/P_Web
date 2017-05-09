@@ -1,36 +1,46 @@
 <?php
+    /*
+        ETML
+        Auteur: Cl�ment Dieperink
+        Date: 21.03.17
+        Description: Permet � un utilisateur de se cr�er un compte
+    */
+
     $pageId = 6;
     require_once("before.php");
 
-//TODO : redirect / warn if the user is already logged
-
-//check if the user is already connected
+    // V�rifie si l'utilisateur est d�j� connect�
     if (isset($_SESSION["userID"]) && $_SESSION["userID"] != null) {
         $_SESSION["mustShowPopup"] = true;
-        // redirect to the previous page, or the index page if none is inputed
-        if (isset($_GET["previousPageID"])) {
+
+        // Redirige vers la page pr�c�dente, ou la page d'accueil si aucune est entr�e
+        // Et s'assure de ne pas rediriger vers la page actuel
+        if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
             header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
         } else {
             header("location: Accueil");
         }
     }
 
-//check if there's an attempt to login
+    // V�rifie s'il y a des valeurs d'inscription en post
     if (isset($_POST["email"]) && isset($_POST["pswd"]) && isset($_POST["pswdConfirmed"])) {
 
+        // Valide les informations
         $error = FormValidator::checkRegister($_POST["email"], $_POST["pswd"], $_POST["pswdConfirmed"]);
 
+        // S'il n'y a pas eu d'erreure
         if ($error == null) {
-            if (DBCom::saveUserData($_POST["email"], password_hash($_POST["pswd"], PASSWORD_DEFAULT), date("Y-m-d"))) {
-                if (isset($_GET["previousPageID"])) {
-                    header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
-                } else {
-                    header("location: Accueil");
-                }
-            } else {
+            // Enregistre l'utilisateur et le connecte
+            $_SESSION["userID"] = DBCom::saveUserData($_POST["email"], password_hash($_POST["pswd"], PASSWORD_DEFAULT), date("Y-m-d"));
 
+            // Redirige vers la derni�re page ou l'index s'il n'y en a pas
+            if (isset($_GET["previousPageID"])) {
+                header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
+            } else {
+                header("location: Accueil");
             }
         } else {
+            // Si non affiche l'erreur
             ?>
             <div class="alert alert-danger alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -47,8 +57,9 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         <input id="email" type="text" class="form-control" name="email"
-                               placeholder="Email" <?php echo isset($_POST["email"]) ? "value=\"" . $_POST["email"] . "\"" : "" ?>
-                               required>
+                        <!-- Remet l'email s'il l'utilisateur avait fait une erreure -->
+                        placeholder="Email" <?php echo isset($_POST["email"]) ? "value=\"" . $_POST["email"] . "\"" : "" ?>
+                        required>
                     </div>
                     <br>
                     <div class="input-group">

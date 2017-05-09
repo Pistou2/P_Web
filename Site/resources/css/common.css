@@ -1,8 +1,8 @@
 /*
 ETML
-Author: Clément Dieperink
-Date: 
-Summary: 
+Author: Clément Dieperink + Yann Merk
+Date: 14.02.17
+Summary: CSS du site ShareBook
 */
 
 body {
@@ -59,16 +59,76 @@ textarea {
     max-height: 100%;
 }
 
+/*===================================*/
+/* Pour la taille de l'image de ShowBook */
 #bookCover {
     width: 100%;
     max-width: 400px;
 }
 
+/* Pour l'affichage du PDF de l'extrait du livre */
 iframe#bookExtract {
     width: 100%;
     height: 800px;
 }
 
+/* Pour la taille de la note du livre */
 #rating {
     font-size: 40px;
+}
+
+/* Taille différente si le text quand il n'y a pas de note est affiché */
+#rating #noRate {
+    font-size: 30px;
+}
+
+/* Taille pour la note de l'utilisateur */
+#currentRate {
+    font-size: 20px;
+}
+
+/* Changement de la couleur des étoiles bootstrap remplie */
+.glyphicon-star {
+    color: #022692;
+}
+
+/* Changement de la couleur des étoiles bootstrap vide (une remplie mais d'une autre couleur) */
+.glyphicon-star.empty {
+    color: #808080;
+}
+
+/* Demie étoiles bootstrap */
+.glyphicon-star.half {
+    position: relative;
+}
+
+.glyphicon-star.half:before {
+    position: relative;
+    z-index: 9;
+    width: 47%;
+    display: block;
+    overflow: hidden;
+}
+
+.glyphicon-star.half:after {
+    content: '\e006';
+    position: absolute;
+    z-index: 8;
+    color: #808080;
+    top: 0;
+    left: 0;
+}
+
+/*========================================*/
+/* Pour mettre au centre la pagination de la page d'ouvrage */
+div.pagination {
+    text-align: center;
+}
+
+div.pagination ul {
+    list-style: none;
+}
+
+div.pagination ul li {
+    display: inline;
 }

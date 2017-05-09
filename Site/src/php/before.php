@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
-Auteurs: Clément Dieperink + Yann Merk
-Date: 14.02.2017
-Description:
+    Auteurs: Clément Dieperink + Yann Merk
+    Date: 14.02.2017
+    Description: Début de toutes les pages du site
 -->
 
 <?php
@@ -13,18 +13,24 @@ Description:
         include_once "classes/$class.php";
     });
 
+    // S'il n'y a pas de changement de titre pour la page
     if (!isset($pageTitle)) {
+
+        // Obtient le titre par défaut pour la page
         $pageTitle = GlobalValue::PAGES_ARRAY["$pageId"][0];
     }
 
+    // Si la variable userID de la session n'est pas enregistrée la met à null
     if (!isset($_SESSION["userID"])) {
         $_SESSION["userID"] = null;
     }
 
+    // Si la variable mustShowPopup de la session n'est pas enregistrée la met à false
     if (!isset($_SESSION["mustShowPopup"])) {
         $_SESSION["mustShowPopup"] = false;
     }
 
+    // Vérifie si l'utilisateur est connecté
     $isConnected = $_SESSION["userID"] != null;
 
     /*Liste de page :
@@ -83,12 +89,20 @@ Description:
 
                     <ul class="nav navbar-nav navbar-right">
                         <?php
+                            // Si l'utilisateur est connecté affiche le bouton de déconnexion
                             if ($isConnected) {
-                                echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Mon Compte</a></li>';
-                                echo '<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>';
+                                ?>
+                                <li><a href="logout?previousPageID=<?php echo $pageId ?>"><span
+                                            class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                                <?php
                             } else {
-                                echo '<li><a href="Inscription?previousPageID=' . $pageId . '""><span class="glyphicon glyphicon-user"></span> Inscription</a></li>';
-                                echo '<li><a href="login?previousPageID=' . $pageId . '"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+                                // Sinon affiche le lien pour la connexion et l'inscription
+                                ?>
+                                <li><a href="Inscription?previousPageID=<?php echo $pageId ?>"><span
+                                            class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                                <li><a href="login?previousPageID=<?php echo $pageId ?>"><span
+                                            class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                                <?php
                             }
                         ?>
                     </ul>
@@ -103,47 +117,27 @@ Description:
                 <div class="col-sm-8 col-sm-push-2">
 
                     <?php
+                        // S'il faut afficher un popup pour la confirmation de connexion/déconnexion
                         if ($_SESSION["mustShowPopup"]) {
+                        // Si l'utilisateur est connecté affiche que la connexion a été réussie
                         if ($isConnected) {
                         ?>
-                        <!--<div class="modal fade" tabindex="-1" role="dialog" id="ConfirmConnection">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Connexion réussie</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Vous avez bien été déconnecté de votre compte&hellip;</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div><!-- /.modal-content ->
-                            </div><!-- /.modal-dialog ->
-                        </div><!-- /.modal ->
-                        <script>
-                        $(document).ready(function () {
-                            $("#ConfirmConnection").modal();
-                        });
-                        </script>-->
                         <div class="alert alert-success alert-dismissable">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             <strong>Connection réussie!</strong>
                         </div>
-
                         <?php
-
                     } else {
+                        // Sinon affiche que la déconnexion est réussie
                     ?>
                     <div class="alert alert-success alert-dismissable">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <p>Vous vous êtes bien déconnecté.</p>
+                        <strong>Vous vous êtes bien déconnecté.</strong>
                     </div>
 <?php
     }
 
+    // Indique qu'il ne faut plus afficher le popup
     $_SESSION["mustShowPopup"] = false;
     }
 ?>

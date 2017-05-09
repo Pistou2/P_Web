@@ -1,24 +1,32 @@
 <?php
+    /*
+        ETML
+        Auteur: Yann Merk
+        Date: 14.03.17
+        Description: Permet à un utilisateur connecté d'ajouter un livre
+    */
+
     $pageId = 2;
     require_once("before.php");
 
-//Vérifie si l'utilisateur est bien connecté pour afficher la page
+    // Vérifie si l'utilisateur est bien connecté pour afficher la page
     if ($_SESSION["userID"] == null) {
         header("Location: login?previousPageID=$pageId");
         exit;
     }
-//check if a post has been already made or no
+
+    // Vérifie si un POST est fait ou pas
     if (isset($_POST) && count($_POST) > 0) {
-        //if Yes, check if the inputs are correct or no, and write errors according to that
+
+        // Si oui, vérifie que les inputs sont correct et affiche une erreur en fonction
         $bookId = FormValidator::checkAddBook($_POST, $_FILES);
-        
-        if($bookId!=null){
-            header('location: ShowBook?bookId='.$bookId);
+
+        // Si l'id du livre n'est pas nul redirige vers la page d'affichage du livre
+        if ($bookId != null) {
+            header('location: ShowBook?bookId=' . $bookId);
             exit;
-        }        
+        }
     }
-//TODO : Reremplir la page automatiquement en cas d'erreur au lieu de demander à l'utilisateur de tout retaper
-//TODO : à la correction vérifier le nom de l'auteur, en chercher des avec un nom semblable à celui entré, ou avertir avant d'en créer un nouveau
 ?>
     <form method="post" enctype="multipart/form-data">
         <div class="row">
@@ -64,7 +72,7 @@
                                    title="<?php echo $allCategory[$i]["catDescription"] ?>">
                                 <input type="checkbox"
                                        name="bookCategory[]" value="<?php echo $allCategory[$i]['idCategory'] ?>"
-                                    <?php echo isset($_POST['bookCategory']) && in_array($allCategory[$i]['idCategory'],$_POST['bookCategory']) ? "checked" : "" ?>/>
+                                    <?php echo isset($_POST['bookCategory']) && in_array($allCategory[$i]['idCategory'], $_POST['bookCategory']) ? "checked" : "" ?>/>
                                 <?php echo $allCategory[$i]['catName'] ?>
                             </label>
                         </div>
@@ -80,7 +88,8 @@
 
                         for ($i = 0; $i < count($allType); $i++) {
                             ?>
-                            <option value="<?php echo $allType[$i]['idBookType'] ?>" <?php echo isset($_POST['selType']) && $_POST['selType'] == $allType[$i]['idBookType'] ? "selected" : ""?>><?php echo $allType[$i]['btName'] ?></option>
+                            <option
+                                value="<?php echo $allType[$i]['idBookType'] ?>" <?php echo isset($_POST['selType']) && $_POST['selType'] == $allType[$i]['idBookType'] ? "selected" : "" ?>><?php echo $allType[$i]['btName'] ?></option>
                             <?php
                         }
                     ?>

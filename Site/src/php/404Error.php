@@ -1,4 +1,11 @@
 <?php
+    /*
+        ETML
+        Auteur: Clément Dieperink
+        Date: 07.03.17
+        Description: Page d'erreur 404
+    */
+
     $pageId = 4;
     require_once("before.php");
 ?>
