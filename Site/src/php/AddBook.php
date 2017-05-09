@@ -7,11 +7,11 @@
     */
 
     $pageId = 2;
-    require_once("before.php");
+    require_once("header.inc.php");
 
     // Vérifie si l'utilisateur est bien connecté pour afficher la page
     if ($_SESSION["userID"] == null) {
-        header("Location: login?previousPageID=$pageId");
+        header("Location: Login?previousPageID=$pageId");
         exit;
     }
 
@@ -131,4 +131,4 @@
         </div>
     </form>
 <?php
-    require_once("after.php");
+    require_once("footer.inc.php");

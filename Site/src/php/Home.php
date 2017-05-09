@@ -7,7 +7,7 @@
     */
 
     $pageId = 0;
-    require_once("before.php");
+    require_once("header.inc.php");
 ?>
     <h1>Bienvenue</h1>
     <p>Ce site a pour but de pouvoir partager des livres que vous avez lu avec d'autre personne.</p>
@@ -29,4 +29,4 @@
         </a>
         <?php
     }
-    require_once("after.php");
+    require_once("footer.inc.php");

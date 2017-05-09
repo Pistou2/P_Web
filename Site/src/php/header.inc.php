@@ -34,13 +34,13 @@
     $isConnected = $_SESSION["userID"] != null;
 
     /*Liste de page :
-    0 : Accueil
-    1 : Ouvrage
+    0 : Home
+    1 : Books
     2 : AddBook
     3 : 401Error
     4 : 404Error
     5 : Login
-    6 : Inscription
+    6 : SignUp
     7 : ShowBook
     */
 ?>
@@ -69,12 +69,12 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="Accueil"><?php echo GlobalValue::SITE_TITLE ?></a>
+                        <a class="navbar-brand" href="Home"><?php echo GlobalValue::SITE_TITLE ?></a>
                     </div>
 
                     <ul class="nav navbar-nav">
                         <li <?php echo $pageId === 0 ? 'class="active"' : '' ?>><a
-                                href=<?php echo '"' . GlobalValue::PAGES_ARRAY[0][0] . '">' . GlobalValue::PAGES_ARRAY[0][0] ?></a>
+                                href=<?php echo '"' . GlobalValue::PAGES_ARRAY[0][1] . '">' . GlobalValue::PAGES_ARRAY[0][0] ?></a>
                         </li>
                         <li <?php echo $pageId === 1 ? 'class="active"' : '' ?>><a
                                 href=<?php echo '"' . GlobalValue::PAGES_ARRAY[1][1] . '">' . GlobalValue::PAGES_ARRAY[1][0] ?></a>
@@ -92,15 +92,15 @@
                             // Si l'utilisateur est connecté affiche le bouton de déconnexion
                             if ($isConnected) {
                                 ?>
-                                <li><a href="logout?previousPageID=<?php echo $pageId ?>"><span
+                                <li><a href="Logout?previousPageID=<?php echo $pageId ?>"><span
                                             class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                                 <?php
                             } else {
                                 // Sinon affiche le lien pour la connexion et l'inscription
                                 ?>
-                                <li><a href="Inscription?previousPageID=<?php echo $pageId ?>"><span
+                                <li><a href="SignUp?previousPageID=<?php echo $pageId ?>"><span
                                             class="glyphicon glyphicon-user"></span> Inscription</a></li>
-                                <li><a href="login?previousPageID=<?php echo $pageId ?>"><span
+                                <li><a href="Login?previousPageID=<?php echo $pageId ?>"><span
                                             class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                                 <?php
                             }

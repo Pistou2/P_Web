@@ -7,7 +7,7 @@
     */
 
     $pageId = 5;
-    require_once("before.php");
+    require_once("header.inc.php");
 
     // Vérifie si l'utilisateur est connecté
     if (isset($_SESSION["userID"]) && $_SESSION["userID"] != null) {
@@ -18,7 +18,7 @@
         if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
             header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
         } else {
-            header("location: Accueil");
+            header("location: Home");
         }
     }
 
@@ -34,10 +34,10 @@
 
             // Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
             // Et s'assure de ne pas rediriger vers la page actuel ou la page d'inscription
-            if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId && $_GET["previousPageID"] != GlobalValue::ID_PAGE_INSCRIPTION) {
+            if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId && $_GET["previousPageID"] != GlobalValue::ID_PAGE_SIGN_UP) {
                 header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
             } else {
-                header("location: Accueil");
+                header("location: Home");
             }
         } else {
             // Si non, affiche une erreur
@@ -63,10 +63,11 @@
                         <input id="pswd" type="password" class="form-control" name="pswd"
                                placeholder="Mot de passe" required>
                     </div>
+                    <br />
                     <button type="submit" class="btn btn-default">Login</button>
                 </form>
             </div>
         </div>
     </div>
 <?php
-    require_once("after.php");
+    require_once("footer.inc.php");

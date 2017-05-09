@@ -3,7 +3,7 @@
         ETML
         Auteur: Yann Merk
         Date: 14.03.17
-        Description: Permet à une personne de se déconnecter
+        Description: Permet Ã  une personne de se dÃ©connecter
     */
 
     // Ouvre la session
@@ -14,13 +14,13 @@
         include_once "classes/$class.php";
     });
 
-    // Réinitialise la session et indique qu'il faut afficher un popup (pour confirmer la déconnexion)
+    // RÃ©initialise la session et indique qu'il faut afficher un popup (pour confirmer la dÃ©connexion)
     $_SESSION = Array();
     $_SESSION["mustShowPopup"] = true;
 
-    // Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
+    // Redirige vers la page prÃ©cÃ©dente, ou la page d'accueil si aucune est entrÃ©e
     if (isset($_GET["previousPageID"])) {
         header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
     } else {
-        header("location: Accueil");
+        header("location: Home");
     }

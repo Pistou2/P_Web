@@ -18,16 +18,16 @@
         // Second tableau 0 = Titre de la page, 1 = Nom du fichier de la page
         const PAGES_ARRAY =
             [
-                ["Accueil", "Accueil"],
-                ["Ouvrages", "Ouvrage"],
+                ["Accueil", "Home"],
+                ["Ouvrages", "Books"],
                 ["Ajouter un ouvrage", "AddBook"],
                 ["Erreur 401", "401Error"],
                 ["Erreur 404", "404Error"],
                 ["Login", "Login"],
-                ["Inscription", "Inscription"],
+                ["Inscription", "SignUp"],
                 ["Livre", "ShowBook"]
             ];
 
         // Id de la page d'inscription
-        const ID_PAGE_INSCRIPTION = 6;
+        const ID_PAGE_SIGN_UP = 6;
     }

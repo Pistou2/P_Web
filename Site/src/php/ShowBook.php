@@ -26,17 +26,17 @@
             $pageTitle = $bookInfo["booTitle"];
         } else {
             // Si le livre n'existe pas redirige vers la page de sélection des livres
-            header("Location: Ouvrage");
+            header("Location: Books");
             die();
         }
     } else {
         // S'il n'y a pas de livre à regarder redirige vers la page de sélection des livres
-        header("Location: Ouvrage");
+        header("Location: Books");
         die();
     }
 
     // Affiche le début de la page
-    require_once("before.php");
+    require_once("header.inc.php");
 
     // Si l'utilisateur à mis une note et qu'il est connecté
     if (isset($_GET["rate"]) && $isConnected) {
@@ -201,4 +201,4 @@
         </div>
     </div>
 <?php
-    require_once("after.php");
+    require_once("footer.inc.php");

@@ -1,7 +1,7 @@
 Options -MultiViews
 ErrorDocument 404 /src/php/404Error.php
 
-DirectoryIndex src/php/Accueil.php
+DirectoryIndex src/php/Home.php
 
 RewriteEngine On
 

@@ -1,28 +1,28 @@
 <?php
     /*
         ETML
-        Auteur: Cl�ment Dieperink
+        Auteur: Clément Dieperink
         Date: 21.03.17
-        Description: Permet � un utilisateur de se cr�er un compte
+        Description: Permet à un utilisateur de se créer un compte
     */
 
     $pageId = 6;
-    require_once("before.php");
+    require_once("header.inc.php");
 
-    // V�rifie si l'utilisateur est d�j� connect�
+    // Vérifie si l'utilisateur est déjà connecté
     if (isset($_SESSION["userID"]) && $_SESSION["userID"] != null) {
         $_SESSION["mustShowPopup"] = true;
 
-        // Redirige vers la page pr�c�dente, ou la page d'accueil si aucune est entr�e
+        // Redirige vers la page précédente, ou la page d'accueil si aucune est entrée
         // Et s'assure de ne pas rediriger vers la page actuel
         if (isset($_GET["previousPageID"]) && $_GET["previousPageID"] != $pageId) {
             header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
         } else {
-            header("location: Accueil");
+            header("location: Home");
         }
     }
 
-    // V�rifie s'il y a des valeurs d'inscription en post
+    // Vérifie s'il y a des valeurs d'inscription en post
     if (isset($_POST["email"]) && isset($_POST["pswd"]) && isset($_POST["pswdConfirmed"])) {
 
         // Valide les informations
@@ -37,7 +37,7 @@
             if (isset($_GET["previousPageID"])) {
                 header("location: " . GlobalValue::PAGES_ARRAY[$_GET["previousPageID"]][1]);
             } else {
-                header("location: Accueil");
+                header("location: Home");
             }
         } else {
             // Si non affiche l'erreur
@@ -57,7 +57,6 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         <input id="email" type="text" class="form-control" name="email"
-                        <!-- Remet l'email s'il l'utilisateur avait fait une erreure -->
                         placeholder="Email" <?php echo isset($_POST["email"]) ? "value=\"" . $_POST["email"] . "\"" : "" ?>
                         required>
                     </div>
@@ -80,4 +79,4 @@
         </div>
     </div>
 <?php
-    require_once("after.php");
+    require_once("footer.inc.php");

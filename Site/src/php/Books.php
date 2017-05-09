@@ -7,7 +7,7 @@
     */
 
     $pageId = 1;
-    require_once("before.php");
+    require_once("header.inc.php");
 
     // Initialise une variable pour le nombre maximum de livre à afficher
     $maxBookShow = 30;
@@ -28,7 +28,7 @@
                 //Affiche tous les livres
                 foreach ($books as $book) {
                     ?>
-                    <a href="/ShowBook?bookId=<?php echo $book['idBook'] ?>">
+                    <a href="ShowBook?bookId=<?php echo $book['idBook'] ?>">
                         <div class="bookElement col-sm-4">
                             <p><?php echo $book['booTitle'] ?></p>
                             <img src="userContent/Book_Cover/<?php echo $book['booPictureLink'] ?>"
@@ -40,7 +40,7 @@
             } // Sinon s'il y a des livres dans la BD
             else if ($totalOfBook > 0) {
                 // Redirige vers la page 1 de l'affichage des ouvrages
-                header("Location: Ouvrage");
+                header("Location: Book");
             } else {
                 // Sinon affiche un message pour dire qu'il n'y a pas encore de livre
                 Misc::writeMessage(2, "Il n'y a aucun livre pour le moment.");
@@ -65,7 +65,7 @@
                         if ($pageNumber != $startPage) {
                             // Affiche une flèche vers la gauche pour "précédent"
                             ?>
-                            <li><a href="Ouvrage?pageNumber=<?php echo $pageNumber - 1 ?>"><span
+                            <li><a href="Books?pageNumber=<?php echo $pageNumber - 1 ?>"><span
                                         class="glyphicon glyphicon-menu-left"></span></a></li>
                             <?php
                         }
@@ -74,7 +74,7 @@
                         for ($i = $startPage; $i <= $endPage; $i++) {
                             ?>
                             <li <?php echo $i == $pageNumber ? 'class="active"' : "" ?>><a
-                                    href="Ouvrage?pageNumber=<?php echo $i ?>"><?php echo $i ?></a></li>
+                                    href="Books?pageNumber=<?php echo $i ?>"><?php echo $i ?></a></li>
                             <?php
                         }
 
@@ -82,7 +82,7 @@
                         if ($pageNumber != $endPage) {
                             // Affiche une flèche vers la droite pour "suivant"
                             ?>
-                            <li><a href="Ouvrage?pageNumber=<?php echo $pageNumber + 1 ?>"><span
+                            <li><a href="Books?pageNumber=<?php echo $pageNumber + 1 ?>"><span
                                         class="glyphicon glyphicon-menu-right"></span></a></li>
                             <?php
                         }
@@ -93,4 +93,4 @@
         ?>
     </div>
 <?php
-    require_once("after.php");
+    require_once("footer.inc.php");
